@@ -8,10 +8,8 @@
 --  named "excerpt_copy" with the parameters $1 = begin,
 --  $2 = duration, $3 = source file name
 -- (see bottom of this file for all key bindings)
-
--- initialization:
-
-utils = require 'mp.utils'
+-- luacheck: ignore utils
+utils = require "mp.utils"
 
 excerpt_begin = 0.0
 excerpt_end   = mp.get_property_native("length")
@@ -87,7 +85,7 @@ end
 
 local function excerpt_write_handler()
    if excerpt_begin == excerpt_end then
-      message = "excerpt_write: not writing because begin == end == " .. excerpt_begin
+      local message = "excerpt_write: not writing because begin == end == " .. excerpt_begin
       mp.osd_message(message, 3)
       return
    end
@@ -114,12 +112,12 @@ local function excerpt_write_handler()
       end
    end
    if fname == "" then
-      message = "not writing because all filenames already in use"
+      local message = "not writing because all filenames already in use"
       mp.osd_message(message, 10)
       return
    end
 
-   duration = excerpt_end - excerpt_begin
+   local duration = excerpt_end - excerpt_begin
 
    local srcname = mp.get_property_native("path")
 
@@ -141,7 +139,7 @@ local function excerpt_write_handler()
    local res = utils.subprocess(p)
 
    if (res["error"] ~= nil) then
-      local message = "failed to run excerpt_copy\nerror message: " .. res["error"]
+      message = "failed to run excerpt_copy\nerror message: " .. res["error"]
       message = message .. "\nstatus = " .. res["status"] .. "\nstdout = " .. res["stdout"]
       mp.msg.log("error", message)
       mp.osd_message(message, 10)

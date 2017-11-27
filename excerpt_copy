@@ -1,13 +1,13 @@
 #!/bin/bash
+set -e
 
-BEGIN=$1
-DURATION=$2
-SRC="$3"
-DST="$4"
+BEGIN="$1"
+shift
+DURATION="$1"
+shift
+SRC="$1"
+shift
+DST="$1"
+shift
 
-
-ffmpeg -y -nostdin -ss $BEGIN -i "$SRC" -t $DURATION -codec:v copy -codec:a copy -codec:d copy \
-  "$DST"
-
-
-#ffmpeg -ss $BEGIN -i $SRC -to $END -strict -2 ${DST}.mp4
+ffmpeg -y -nostdin -ss $BEGIN -i "$SRC" -t $DURATION -codec:v copy -codec:a copy -codec:d copy "$DST"
